@@ -32,9 +32,16 @@ var dstream=ssc.socketTextStream("quickstart.cloudera",4444)
 val lineas =dstream.filter(x=>x.contains("KBDOC"))
 
 //Para cada RDD, imprime el número de líneas que contienen la cadena de caracteres indicada. Para ello, puedes usar la función “foreachRDD()”.
-var numero=foreachRDD(líneas,1)
+lineas.foreachRDD{ rdd =>
+  val contar = rdd.count()
+  println(contar)
+}
 //Guarda el resultado del filtrado en un fichero de texto en sistema de archivos local
-Numero=ssc.saveAsTextFiles(“/home/Cloudera/…”)
+numero=ssc.saveAsTextFiles(“/home/Cloudera/…”)
+
+// Contar el número de líneas que contienen la palabra "KBDOC" en ventanas de 10 segundos cada 2 segundos
+val countWindowed = lineas.countByWindow(Seconds(10), Seconds(2))
+countWindowed.print()
 
 ssc.start()
 b. ssc.awaitTermination()
