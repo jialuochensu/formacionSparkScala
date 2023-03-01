@@ -37,11 +37,11 @@ lineas.foreachRDD{ rdd =>
   println(contar)
 }
 //Guarda el resultado del filtrado en un fichero de texto en sistema de archivos local
-numero=ssc.saveAsTextFiles(“/home/Cloudera/…”)
+numero=ssc.saveAsTextFiles(“/home/Cloudera/Desktop/ejercicios”)
 
 // Contar el número de líneas que contienen la palabra "KBDOC" en ventanas de 10 segundos cada 2 segundos
 val countWindowed = lineas.countByWindow(Seconds(10), Seconds(2))
 countWindowed.print()
 
 ssc.start()
-b. ssc.awaitTermination()
+ssc.awaitTermination()
